@@ -2,7 +2,7 @@
 
 There is two vulnerabilities in this challenge, one the that the voting power is directly proportional to the number of gov token that you own. And two, the `Selfie` pool offers `flash-loan` of gov tokens.
 
-What you only have to do is create a flash-loan receiver contract(see `selfie/SelfieReceiver.sol` file)that borrow an amount of gov tokens enough to represent more than 51% of tokens in circulation to be able to queue an action on the governance mechanism and after that return the funds to the pool.
+What you only have to do is create a flash-loan receiver contract(see `selfie/SelfieReceiver.sol` file)that borrow an amount of gov tokens enough to represent more than `51% `of tokens in circulation to be able to queue an action on the governance mechanism and after that return the funds to the pool.
 
 That action can be to call `SelfiePool.emergencyExit` function in favor of the recovery address.
 ```js
